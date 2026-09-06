@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Settings - My Website</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+<header>
+    <h2>My Website</h2>
+
+    <nav>
+        <a href="dashboard.html">Dashboard</a>
+        <a href="index.html">Home</a>
+    </nav>
+</header>
+
+<section class="dashboard">
+
+    <h1>⚙️ Settings</h1>
+
+    <div class="settings-box">
+
+        <h2>Website Settings</h2>
+
+        <label>
+            <input type="checkbox" id="darkModeSetting"
+                   onchange="changeTheme()">
+            🌙 Dark Mode
+        </label>
+
+        <br><br>
+
+        <button onclick="saveSettings()">
+            Save Settings
+        </button>
+
+    </div>
+
+    <br>
+
+    <button onclick="window.location.href='dashboard.html'">
+        ← Back to Dashboard
+    </button>
+
+</section>
+
+<script src="script.js"></script>
+
+</body>
+</html>
