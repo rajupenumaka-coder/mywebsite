@@ -1,5 +1,4 @@
-```javascript
-// =========================================================
+﻿// =========================================================
 // MY WEBSITE - COMPLETE FRONTEND JAVASCRIPT
 // =========================================================
 
@@ -258,7 +257,7 @@ async function signupUser(event) {
 
 
         alert(
-            "Account created successfully! ✅"
+            "Account created successfully! âœ…"
         );
 
 
@@ -408,7 +407,7 @@ async function loginUser(event) {
 
 
         alert(
-            "Login successful! ✅"
+            "Login successful! âœ…"
         );
 
 
@@ -672,7 +671,7 @@ async function loadDashboard() {
 
 
         console.log(
-            "Dashboard loaded successfully. ✅"
+            "Dashboard loaded successfully. âœ…"
         );
 
 
@@ -1036,7 +1035,7 @@ async function updateProfile(event) {
 
 
         alert(
-            "Profile updated successfully! ✅"
+            "Profile updated successfully! âœ…"
         );
 
 
@@ -1172,7 +1171,7 @@ async function changePassword(event) {
 
 
         alert(
-            "Password changed successfully! ✅"
+            "Password changed successfully! âœ…"
         );
 
 
@@ -1320,7 +1319,7 @@ async function sendMessage(event) {
 
 
         alert(
-            "Message sent successfully! ✅"
+            "Message sent successfully! âœ…"
         );
 
 
@@ -1464,7 +1463,7 @@ function togglePassword(
 
         if (button) {
             button.textContent =
-                "🙈";
+                "ðŸ™ˆ";
         }
 
     } else {
@@ -1475,7 +1474,7 @@ function togglePassword(
 
         if (button) {
             button.textContent =
-                "👁️";
+                "ðŸ‘ï¸";
         }
 
     }
@@ -1668,7 +1667,7 @@ async function resetPassword() {
 
 
         alert(
-            "Password reset successfully! ✅"
+            "Password reset successfully! âœ…"
         );
 
 
@@ -1745,4 +1744,3 @@ document.addEventListener(
 
     }
 );
-```
