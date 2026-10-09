@@ -1,0 +1,2017 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>Settings | My Website</title>
+
+    <style>
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family:
+                Arial,
+                Helvetica,
+                sans-serif;
+
+            background: #f5f7fb;
+            color: #111827;
+        }
+
+        /* =====================================================
+           LAYOUT
+           ===================================================== */
+
+        .dashboard-layout {
+            min-height: 100vh;
+            display: flex;
+        }
+
+        /* =====================================================
+           SIDEBAR
+           ===================================================== */
+
+        .sidebar {
+            width: 250px;
+            min-height: 100vh;
+            background: #111827;
+            color: white;
+            padding: 22px 15px;
+            position: fixed;
+            left: 0;
+            top: 0;
+            bottom: 0;
+        }
+
+        .logo {
+            padding: 10px 14px 25px;
+            border-bottom: 1px solid #374151;
+            margin-bottom: 20px;
+        }
+
+        .logo h2 {
+            font-size: 21px;
+        }
+
+        .logo p {
+            color: #9ca3af;
+            font-size: 12px;
+            margin-top: 5px;
+        }
+
+        .nav-menu {
+            display: flex;
+            flex-direction: column;
+            gap: 5px;
+        }
+
+        .nav-menu a {
+            color: #d1d5db;
+            text-decoration: none;
+            padding: 12px 14px;
+            border-radius: 8px;
+            font-size: 14px;
+            transition: 0.2s;
+        }
+
+        .nav-menu a:hover {
+            background: #1f2937;
+            color: white;
+        }
+
+        .nav-menu a.active {
+            background: #2563eb;
+            color: white;
+        }
+
+        .sidebar-bottom {
+            position: absolute;
+            left: 15px;
+            right: 15px;
+            bottom: 20px;
+        }
+
+        .logout-btn {
+            width: 100%;
+            border: 1px solid #374151;
+            background: transparent;
+            color: #d1d5db;
+            padding: 11px;
+            border-radius: 8px;
+            cursor: pointer;
+        }
+
+        .logout-btn:hover {
+            background: #dc2626;
+            border-color: #dc2626;
+            color: white;
+        }
+
+        /* =====================================================
+           MAIN
+           ===================================================== */
+
+        .main-content {
+            margin-left: 250px;
+            width: calc(100% - 250px);
+            min-height: 100vh;
+            padding: 35px;
+        }
+
+        .page-header {
+            margin-bottom: 25px;
+        }
+
+        .page-header h1 {
+            font-size: 30px;
+            margin-bottom: 7px;
+        }
+
+        .page-header p {
+            color: #6b7280;
+            font-size: 14px;
+        }
+
+        /* =====================================================
+           SETTINGS CONTAINER
+           ===================================================== */
+
+        .settings-container {
+            max-width: 1150px;
+            display: grid;
+            grid-template-columns: 220px 1fr;
+            gap: 22px;
+        }
+
+        /* =====================================================
+           SETTINGS MENU
+           ===================================================== */
+
+        .settings-menu {
+            background: white;
+            border: 1px solid #e5e7eb;
+            border-radius: 14px;
+            padding: 10px;
+            height: fit-content;
+        }
+
+        .settings-menu button {
+            width: 100%;
+            padding: 12px;
+            border: none;
+            background: transparent;
+            text-align: left;
+            border-radius: 8px;
+            cursor: pointer;
+            color: #4b5563;
+            font-size: 14px;
+            margin-bottom: 4px;
+        }
+
+        .settings-menu button:hover {
+            background: #f3f4f6;
+        }
+
+        .settings-menu button.active {
+            background: #eff6ff;
+            color: #2563eb;
+            font-weight: bold;
+        }
+
+        /* =====================================================
+           SECTION
+           ===================================================== */
+
+        .settings-section {
+            display: none;
+            background: white;
+            border: 1px solid #e5e7eb;
+            border-radius: 14px;
+            padding: 25px;
+            box-shadow:
+                0 4px 15px rgba(0,0,0,0.03);
+        }
+
+        .settings-section.active {
+            display: block;
+        }
+
+        .section-header {
+            padding-bottom: 18px;
+            margin-bottom: 22px;
+            border-bottom: 1px solid #e5e7eb;
+        }
+
+        .section-header h2 {
+            font-size: 19px;
+            margin-bottom: 5px;
+        }
+
+        .section-header p {
+            font-size: 13px;
+            color: #6b7280;
+        }
+
+        /* =====================================================
+           FORM
+           ===================================================== */
+
+        .form-group {
+            margin-bottom: 18px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 7px;
+            font-size: 13px;
+            font-weight: bold;
+            color: #374151;
+        }
+
+        .form-group input,
+        .form-group select {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #d1d5db;
+            border-radius: 8px;
+            outline: none;
+            font-size: 14px;
+        }
+
+        .form-group input:focus,
+        .form-group select:focus {
+            border-color: #2563eb;
+            box-shadow:
+                0 0 0 3px
+                rgba(37,99,235,0.1);
+        }
+
+        .form-help {
+            display: block;
+            margin-top: 5px;
+            font-size: 12px;
+            color: #9ca3af;
+        }
+
+        /* =====================================================
+           PASSWORD
+           ===================================================== */
+
+        .password-wrapper {
+            position: relative;
+        }
+
+        .password-wrapper input {
+            padding-right: 45px;
+        }
+
+        .show-password {
+            position: absolute;
+            right: 10px;
+            top: 50%;
+            transform: translateY(-50%);
+            border: none;
+            background: transparent;
+            cursor: pointer;
+            font-size: 17px;
+        }
+
+        /* =====================================================
+           BUTTON
+           ===================================================== */
+
+        .actions {
+            display: flex;
+            justify-content: flex-end;
+            gap: 10px;
+            margin-top: 20px;
+        }
+
+        .btn {
+            padding: 11px 18px;
+            border-radius: 8px;
+            border: none;
+            cursor: pointer;
+            font-size: 14px;
+        }
+
+        .btn-primary {
+            background: #2563eb;
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background: #1d4ed8;
+        }
+
+        .btn-primary:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+        }
+
+        .btn-secondary {
+            background: #f3f4f6;
+            color: #374151;
+        }
+
+        /* =====================================================
+           STATUS
+           ===================================================== */
+
+        .status {
+            display: none;
+            padding: 12px;
+            border-radius: 8px;
+            font-size: 13px;
+            margin-bottom: 18px;
+        }
+
+        .status.show {
+            display: block;
+        }
+
+        .status.success {
+            background: #ecfdf5;
+            color: #047857;
+            border: 1px solid #a7f3d0;
+        }
+
+        .status.error {
+            background: #fef2f2;
+            color: #b91c1c;
+            border: 1px solid #fecaca;
+        }
+
+        /* =====================================================
+           SETTING ROW
+           ===================================================== */
+
+        .setting-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 17px 0;
+            border-bottom: 1px solid #f0f0f0;
+        }
+
+        .setting-row:last-child {
+            border-bottom: none;
+        }
+
+        .setting-info h3 {
+            font-size: 14px;
+            margin-bottom: 5px;
+        }
+
+        .setting-info p {
+            font-size: 12px;
+            color: #6b7280;
+        }
+
+        /* =====================================================
+           TOGGLE
+           ===================================================== */
+
+        .toggle {
+            position: relative;
+            width: 45px;
+            height: 24px;
+        }
+
+        .toggle input {
+            display: none;
+        }
+
+        .slider {
+            position: absolute;
+            inset: 0;
+            background: #d1d5db;
+            border-radius: 30px;
+            cursor: pointer;
+        }
+
+        .slider::before {
+            content: "";
+            position: absolute;
+            width: 18px;
+            height: 18px;
+            left: 3px;
+            top: 3px;
+            background: white;
+            border-radius: 50%;
+            transition: 0.2s;
+        }
+
+        .toggle input:checked + .slider {
+            background: #2563eb;
+        }
+
+        .toggle input:checked + .slider::before {
+            transform: translateX(21px);
+        }
+
+        /* =====================================================
+           SECURITY BOX
+           ===================================================== */
+
+        .security-box {
+            background: #f9fafb;
+            border: 1px solid #e5e7eb;
+            padding: 15px;
+            border-radius: 9px;
+            margin-bottom: 18px;
+        }
+
+        .security-box h3 {
+            font-size: 14px;
+            margin-bottom: 5px;
+        }
+
+        .security-box p {
+            color: #6b7280;
+            font-size: 12px;
+        }
+
+        /* =====================================================
+           DANGER
+           ===================================================== */
+
+        .danger-zone {
+            background: #fff7f7;
+            border-color: #fecaca;
+        }
+
+        .danger-zone h3 {
+            color: #b91c1c;
+        }
+
+        .danger-btn {
+            margin-top: 12px;
+            padding: 10px 15px;
+            border: none;
+            border-radius: 7px;
+            background: #dc2626;
+            color: white;
+            cursor: pointer;
+        }
+
+        .danger-btn:hover {
+            background: #b91c1c;
+        }
+
+        /* =====================================================
+           FOOTER
+           ===================================================== */
+
+        .footer {
+            margin-top: 35px;
+            text-align: center;
+            color: #9ca3af;
+            font-size: 12px;
+        }
+
+        /* =====================================================
+           RESPONSIVE
+           ===================================================== */
+
+        @media (max-width: 800px) {
+
+            .sidebar {
+                width: 210px;
+            }
+
+            .main-content {
+                margin-left: 210px;
+                width: calc(100% - 210px);
+                padding: 20px;
+            }
+
+            .settings-container {
+                grid-template-columns: 1fr;
+            }
+
+            .settings-menu {
+                display: flex;
+                overflow-x: auto;
+            }
+
+            .settings-menu button {
+                min-width: 130px;
+            }
+
+        }
+
+        @media (max-width: 600px) {
+
+            .sidebar {
+                position: relative;
+                width: 100%;
+                min-height: auto;
+            }
+
+            .dashboard-layout {
+                display: block;
+            }
+
+            .sidebar-bottom {
+                position: static;
+                margin-top: 20px;
+            }
+
+            .main-content {
+                margin-left: 0;
+                width: 100%;
+                padding: 18px;
+            }
+
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+
+<div class="dashboard-layout">
+
+
+    <!-- =====================================================
+         SIDEBAR
+         ===================================================== -->
+
+    <aside class="sidebar">
+
+        <div class="logo">
+
+            <h2>
+                My Website
+            </h2>
+
+            <p>
+                Admin Dashboard
+            </p>
+
+        </div>
+
+
+        <nav class="nav-menu">
+
+            <a href="dashboard.html">
+                🏠 Dashboard
+            </a>
+
+            <a href="profile.html">
+                👤 Profile
+            </a>
+
+            <a href="message.html">
+                💬 Messages
+            </a>
+
+            <a href="statistics.html">
+                📊 Statistics
+            </a>
+
+            <a
+                href="settings.html"
+                class="active"
+            >
+                ⚙️ Settings
+            </a>
+
+        </nav>
+
+
+        <div class="sidebar-bottom">
+
+            <button
+                class="logout-btn"
+                onclick="logoutUser()"
+            >
+                🚪 Logout
+            </button>
+
+        </div>
+
+    </aside>
+
+
+
+    <!-- =====================================================
+         MAIN CONTENT
+         ===================================================== -->
+
+    <main class="main-content">
+
+
+        <div class="page-header">
+
+            <h1>
+                Settings
+            </h1>
+
+            <p>
+                Manage your account,
+                security and preferences.
+            </p>
+
+        </div>
+
+
+
+        <div class="settings-container">
+
+
+            <!-- =================================================
+                 MENU
+                 ================================================= -->
+
+            <div class="settings-menu">
+
+                <button
+                    class="active"
+                    onclick="openSection(
+                        'account',
+                        this
+                    )"
+                >
+                    👤 Account
+                </button>
+
+
+                <button
+                    onclick="openSection(
+                        'security',
+                        this
+                    )"
+                >
+                    🔐 Security
+                </button>
+
+
+                <button
+                    onclick="openSection(
+                        'notifications',
+                        this
+                    )"
+                >
+                    🔔 Notifications
+                </button>
+
+
+                <button
+                    onclick="openSection(
+                        'appearance',
+                        this
+                    )"
+                >
+                    🎨 Appearance
+                </button>
+
+            </div>
+
+
+
+            <!-- =================================================
+                 CONTENT
+                 ================================================= -->
+
+            <div>
+
+
+                <!-- =================================================
+                     ACCOUNT
+                     ================================================= -->
+
+                <section
+                    id="account"
+                    class="settings-section active"
+                >
+
+                    <div class="section-header">
+
+                        <h2>
+                            Account Settings
+                        </h2>
+
+                        <p>
+                            Update your account information.
+                        </p>
+
+                    </div>
+
+
+                    <div
+                        id="accountStatus"
+                        class="status"
+                    ></div>
+
+
+                    <div class="form-group">
+
+                        <label>
+                            Full Name
+                        </label>
+
+                        <input
+                            type="text"
+                            id="accountName"
+                            placeholder="Enter your name"
+                        >
+
+                    </div>
+
+
+                    <div class="form-group">
+
+                        <label>
+                            Email Address
+                        </label>
+
+                        <input
+                            type="email"
+                            id="accountEmail"
+                            readonly
+                        >
+
+                        <span class="form-help">
+                            Email address cannot be changed here.
+                        </span>
+
+                    </div>
+
+
+                    <div class="form-group">
+
+                        <label>
+                            Country
+                        </label>
+
+                        <select
+                            id="accountCountry"
+                        >
+
+                            <option value="">
+                                Select Country
+                            </option>
+
+                            <option value="India">
+                                India
+                            </option>
+
+                            <option value="United States">
+                                United States
+                            </option>
+
+                            <option value="United Kingdom">
+                                United Kingdom
+                            </option>
+
+                            <option value="Canada">
+                                Canada
+                            </option>
+
+                            <option value="Australia">
+                                Australia
+                            </option>
+
+                        </select>
+
+                    </div>
+
+
+                    <div class="actions">
+
+                        <button
+                            class="btn btn-secondary"
+                            onclick="loadAccount()"
+                        >
+                            Reset
+                        </button>
+
+
+                        <button
+                            class="btn btn-primary"
+                            id="saveAccountBtn"
+                            onclick="saveAccount()"
+                        >
+                            Save Changes
+                        </button>
+
+                    </div>
+
+                </section>
+
+
+
+                <!-- =================================================
+                     SECURITY
+                     ================================================= -->
+
+                <section
+                    id="security"
+                    class="settings-section"
+                >
+
+                    <div class="section-header">
+
+                        <h2>
+                            Security
+                        </h2>
+
+                        <p>
+                            Change your password and
+                            manage account security.
+                        </p>
+
+                    </div>
+
+
+                    <div
+                        id="passwordStatus"
+                        class="status"
+                    ></div>
+
+
+                    <div class="security-box">
+
+                        <h3>
+                            🔐 Change Password
+                        </h3>
+
+                        <p>
+                            Your password must contain
+                            at least 6 characters.
+                        </p>
+
+                    </div>
+
+
+                    <div class="form-group">
+
+                        <label>
+                            Current Password
+                        </label>
+
+                        <div class="password-wrapper">
+
+                            <input
+                                type="password"
+                                id="currentPassword"
+                                placeholder="Current password"
+                            >
+
+                            <button
+                                class="show-password"
+                                onclick="togglePassword(
+                                    'currentPassword',
+                                    this
+                                )"
+                            >
+                                👁️
+                            </button>
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="form-group">
+
+                        <label>
+                            New Password
+                        </label>
+
+                        <div class="password-wrapper">
+
+                            <input
+                                type="password"
+                                id="newPassword"
+                                placeholder="New password"
+                            >
+
+                            <button
+                                class="show-password"
+                                onclick="togglePassword(
+                                    'newPassword',
+                                    this
+                                )"
+                            >
+                                👁️
+                            </button>
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="form-group">
+
+                        <label>
+                            Confirm New Password
+                        </label>
+
+                        <div class="password-wrapper">
+
+                            <input
+                                type="password"
+                                id="confirmPassword"
+                                placeholder="Confirm new password"
+                            >
+
+                            <button
+                                class="show-password"
+                                onclick="togglePassword(
+                                    'confirmPassword',
+                                    this
+                                )"
+                            >
+                                👁️
+                            </button>
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="actions">
+
+                        <button
+                            id="changePasswordBtn"
+                            class="btn btn-primary"
+                            onclick="changePassword()"
+                        >
+                            Update Password
+                        </button>
+
+                    </div>
+
+
+                    <br>
+
+
+                    <div class="security-box">
+
+                        <h3>
+                            🛡️ Password Protection
+                        </h3>
+
+                        <p>
+                            Your password is stored securely
+                            using bcrypt hashing on the server.
+                        </p>
+
+                    </div>
+
+
+                    <div
+                        class="security-box danger-zone"
+                    >
+
+                        <h3>
+                            ⚠️ Logout
+                        </h3>
+
+                        <p>
+                            Sign out from this account
+                            on this device.
+                        </p>
+
+                        <button
+                            class="danger-btn"
+                            onclick="logoutUser()"
+                        >
+                            Logout
+                        </button>
+
+                    </div>
+
+                </section>
+
+
+
+                <!-- =================================================
+                     NOTIFICATIONS
+                     ================================================= -->
+
+                <section
+                    id="notifications"
+                    class="settings-section"
+                >
+
+                    <div class="section-header">
+
+                        <h2>
+                            Notifications
+                        </h2>
+
+                        <p>
+                            Manage your notification preferences.
+                        </p>
+
+                    </div>
+
+
+                    <div class="setting-row">
+
+                        <div class="setting-info">
+
+                            <h3>
+                                Message Notifications
+                            </h3>
+
+                            <p>
+                                Notify me when a new message
+                                is received.
+                            </p>
+
+                        </div>
+
+
+                        <label class="toggle">
+
+                            <input
+                                type="checkbox"
+                                id="messageNotifications"
+                                checked
+                            >
+
+                            <span class="slider"></span>
+
+                        </label>
+
+                    </div>
+
+
+                    <div class="setting-row">
+
+                        <div class="setting-info">
+
+                            <h3>
+                                Login Notifications
+                            </h3>
+
+                            <p>
+                                Notify me about account
+                                login activity.
+                            </p>
+
+                        </div>
+
+
+                        <label class="toggle">
+
+                            <input
+                                type="checkbox"
+                                id="loginNotifications"
+                                checked
+                            >
+
+                            <span class="slider"></span>
+
+                        </label>
+
+                    </div>
+
+
+                    <div class="setting-row">
+
+                        <div class="setting-info">
+
+                            <h3>
+                                Email Notifications
+                            </h3>
+
+                            <p>
+                                Receive important website updates.
+                            </p>
+
+                        </div>
+
+
+                        <label class="toggle">
+
+                            <input
+                                type="checkbox"
+                                id="emailNotifications"
+                            >
+
+                            <span class="slider"></span>
+
+                        </label>
+
+                    </div>
+
+
+                    <div class="actions">
+
+                        <button
+                            class="btn btn-primary"
+                            onclick="saveNotifications()"
+                        >
+                            Save Preferences
+                        </button>
+
+                    </div>
+
+                </section>
+
+
+
+                <!-- =================================================
+                     APPEARANCE
+                     ================================================= -->
+
+                <section
+                    id="appearance"
+                    class="settings-section"
+                >
+
+                    <div class="section-header">
+
+                        <h2>
+                            Appearance
+                        </h2>
+
+                        <p>
+                            Customize your dashboard appearance.
+                        </p>
+
+                    </div>
+
+
+                    <div class="form-group">
+
+                        <label>
+                            Theme
+                        </label>
+
+                        <select
+                            id="themeSelect"
+                        >
+
+                            <option value="light">
+                                ☀️ Light
+                            </option>
+
+                            <option value="dark">
+                                🌙 Dark
+                            </option>
+
+                        </select>
+
+                    </div>
+
+
+                    <div class="setting-row">
+
+                        <div class="setting-info">
+
+                            <h3>
+                                Compact Dashboard
+                            </h3>
+
+                            <p>
+                                Reduce spacing between
+                                dashboard elements.
+                            </p>
+
+                        </div>
+
+
+                        <label class="toggle">
+
+                            <input
+                                type="checkbox"
+                                id="compactMode"
+                            >
+
+                            <span class="slider"></span>
+
+                        </label>
+
+                    </div>
+
+
+                    <div class="actions">
+
+                        <button
+                            class="btn btn-primary"
+                            onclick="saveAppearance()"
+                        >
+                            Save Appearance
+                        </button>
+
+                    </div>
+
+                </section>
+
+
+            </div>
+
+        </div>
+
+
+
+        <div class="footer">
+
+            © 2026 My Website. All rights reserved.
+
+        </div>
+
+
+    </main>
+
+</div>
+
+
+
+<script>
+
+    /* =====================================================
+       GET USER
+       ===================================================== */
+
+    function getUser() {
+
+        try {
+
+            return JSON.parse(
+                localStorage.getItem("user")
+            );
+
+        } catch (error) {
+
+            return null;
+
+        }
+
+    }
+
+
+
+    /* =====================================================
+       OPEN SETTINGS SECTION
+       ===================================================== */
+
+    function openSection(
+        sectionId,
+        button
+    ) {
+
+        document
+            .querySelectorAll(
+                ".settings-section"
+            )
+            .forEach(section => {
+
+                section.classList.remove(
+                    "active"
+                );
+
+            });
+
+
+        document
+            .querySelectorAll(
+                ".settings-menu button"
+            )
+            .forEach(btn => {
+
+                btn.classList.remove(
+                    "active"
+                );
+
+            });
+
+
+        document
+            .getElementById(sectionId)
+            .classList.add("active");
+
+
+        button.classList.add("active");
+
+    }
+
+
+
+    /* =====================================================
+       STATUS MESSAGE
+       ===================================================== */
+
+    function showStatus(
+        id,
+        message,
+        type
+    ) {
+
+        const element =
+            document.getElementById(id);
+
+
+        element.textContent =
+            message;
+
+
+        element.className =
+            "status show " + type;
+
+
+        setTimeout(() => {
+
+            element.classList.remove(
+                "show"
+            );
+
+        }, 5000);
+
+    }
+
+
+
+    /* =====================================================
+       LOAD ACCOUNT
+       ===================================================== */
+
+    function loadAccount() {
+
+        const user =
+            getUser();
+
+
+        if (!user) {
+
+            alert(
+                "Please login again."
+            );
+
+            return;
+
+        }
+
+
+        document.getElementById(
+            "accountName"
+        ).value =
+            user.name || "";
+
+
+        document.getElementById(
+            "accountEmail"
+        ).value =
+            user.email || "";
+
+
+        document.getElementById(
+            "accountCountry"
+        ).value =
+            user.country || "";
+
+    }
+
+
+
+    /* =====================================================
+       SAVE ACCOUNT - MONGODB BACKEND
+       ===================================================== */
+
+    async function saveAccount() {
+
+        const user =
+            getUser();
+
+
+        if (!user || !user.email) {
+
+            showStatus(
+                "accountStatus",
+                "Please login again.",
+                "error"
+            );
+
+            return;
+
+        }
+
+
+        const name =
+            document
+                .getElementById(
+                    "accountName"
+                )
+                .value
+                .trim();
+
+
+        const country =
+            document.getElementById(
+                "accountCountry"
+            ).value;
+
+
+        if (!name) {
+
+            showStatus(
+                "accountStatus",
+                "Please enter your name.",
+                "error"
+            );
+
+            return;
+
+        }
+
+
+        const button =
+            document.getElementById(
+                "saveAccountBtn"
+            );
+
+
+        button.disabled =
+            true;
+
+        button.textContent =
+            "Saving...";
+
+
+        try {
+
+            const response =
+                await fetch(
+                    "/api/account",
+                    {
+
+                        method: "PUT",
+
+                        headers: {
+
+                            "Content-Type":
+                                "application/json"
+
+                        },
+
+                        body: JSON.stringify({
+
+                            email:
+                                user.email,
+
+                            name:
+                                name,
+
+                            country:
+                                country
+
+                        })
+
+                    }
+                );
+
+
+            const data =
+                await response.json();
+
+
+            if (!response.ok) {
+
+                showStatus(
+                    "accountStatus",
+                    data.message ||
+                    "Unable to update account.",
+                    "error"
+                );
+
+                return;
+
+            }
+
+
+            if (data.success) {
+
+                localStorage.setItem(
+                    "user",
+                    JSON.stringify(
+                        data.user
+                    )
+                );
+
+
+                showStatus(
+                    "accountStatus",
+                    "Account updated successfully! ✅",
+                    "success"
+                );
+
+            }
+
+        } catch (error) {
+
+            console.error(
+                error
+            );
+
+
+            showStatus(
+                "accountStatus",
+                "Server error. Please make sure the server is running.",
+                "error"
+            );
+
+        } finally {
+
+            button.disabled =
+                false;
+
+            button.textContent =
+                "Save Changes";
+
+        }
+
+    }
+
+
+
+    /* =====================================================
+       CHANGE PASSWORD
+       ===================================================== */
+
+    async function changePassword() {
+
+        const user =
+            getUser();
+
+
+        if (!user || !user.email) {
+
+            showStatus(
+                "passwordStatus",
+                "Please login again.",
+                "error"
+            );
+
+            return;
+
+        }
+
+
+        const currentPassword =
+            document.getElementById(
+                "currentPassword"
+            ).value;
+
+
+        const newPassword =
+            document.getElementById(
+                "newPassword"
+            ).value;
+
+
+        const confirmPassword =
+            document.getElementById(
+                "confirmPassword"
+            ).value;
+
+
+        if (
+            !currentPassword ||
+            !newPassword ||
+            !confirmPassword
+        ) {
+
+            showStatus(
+                "passwordStatus",
+                "Please fill all password fields.",
+                "error"
+            );
+
+            return;
+
+        }
+
+
+        if (
+            newPassword.length < 6
+        ) {
+
+            showStatus(
+                "passwordStatus",
+                "New password must contain at least 6 characters.",
+                "error"
+            );
+
+            return;
+
+        }
+
+
+        if (
+            newPassword !==
+            confirmPassword
+        ) {
+
+            showStatus(
+                "passwordStatus",
+                "New passwords do not match.",
+                "error"
+            );
+
+            return;
+
+        }
+
+
+        const button =
+            document.getElementById(
+                "changePasswordBtn"
+            );
+
+
+        button.disabled =
+            true;
+
+        button.textContent =
+            "Updating...";
+
+
+        try {
+
+            const response =
+                await fetch(
+                    "/api/change-password",
+                    {
+
+                        method: "POST",
+
+                        headers: {
+
+                            "Content-Type":
+                                "application/json"
+
+                        },
+
+                        body: JSON.stringify({
+
+                            email:
+                                user.email,
+
+                            currentPassword:
+                                currentPassword,
+
+                            newPassword:
+                                newPassword
+
+                        })
+
+                    }
+                );
+
+
+            const data =
+                await response.json();
+
+
+            if (!response.ok) {
+
+                showStatus(
+                    "passwordStatus",
+                    data.message ||
+                    "Unable to change password.",
+                    "error"
+                );
+
+                return;
+
+            }
+
+
+            if (data.success) {
+
+                document.getElementById(
+                    "currentPassword"
+                ).value = "";
+
+
+                document.getElementById(
+                    "newPassword"
+                ).value = "";
+
+
+                document.getElementById(
+                    "confirmPassword"
+                ).value = "";
+
+
+                showStatus(
+                    "passwordStatus",
+                    "Password changed successfully! ✅",
+                    "success"
+                );
+
+            }
+
+        } catch (error) {
+
+            console.error(
+                error
+            );
+
+
+            showStatus(
+                "passwordStatus",
+                "Server error. Please make sure the server is running.",
+                "error"
+            );
+
+        } finally {
+
+            button.disabled =
+                false;
+
+            button.textContent =
+                "Update Password";
+
+        }
+
+    }
+
+
+
+    /* =====================================================
+       PASSWORD VISIBILITY
+       ===================================================== */
+
+    function togglePassword(
+        id,
+        button
+    ) {
+
+        const input =
+            document.getElementById(id);
+
+
+        if (
+            input.type === "password"
+        ) {
+
+            input.type =
+                "text";
+
+            button.textContent =
+                "🙈";
+
+        } else {
+
+            input.type =
+                "password";
+
+            button.textContent =
+                "👁️";
+
+        }
+
+    }
+
+
+
+    /* =====================================================
+       NOTIFICATIONS
+       ===================================================== */
+
+    function saveNotifications() {
+
+        const settings = {
+
+            messages:
+                document.getElementById(
+                    "messageNotifications"
+                ).checked,
+
+            logins:
+                document.getElementById(
+                    "loginNotifications"
+                ).checked,
+
+            emails:
+                document.getElementById(
+                    "emailNotifications"
+                ).checked
+
+        };
+
+
+        localStorage.setItem(
+            "notificationSettings",
+            JSON.stringify(settings)
+        );
+
+
+        alert(
+            "Notification preferences saved successfully! ✅"
+        );
+
+    }
+
+
+
+    function loadNotifications() {
+
+        try {
+
+            const settings =
+                JSON.parse(
+                    localStorage.getItem(
+                        "notificationSettings"
+                    )
+                );
+
+
+            if (!settings) {
+
+                return;
+
+            }
+
+
+            document.getElementById(
+                "messageNotifications"
+            ).checked =
+                settings.messages ?? true;
+
+
+            document.getElementById(
+                "loginNotifications"
+            ).checked =
+                settings.logins ?? true;
+
+
+            document.getElementById(
+                "emailNotifications"
+            ).checked =
+                settings.emails ?? false;
+
+        } catch (error) {
+
+            console.error(
+                error
+            );
+
+        }
+
+    }
+
+
+
+    /* =====================================================
+       APPEARANCE
+       ===================================================== */
+
+    function saveAppearance() {
+
+        const theme =
+            document.getElementById(
+                "themeSelect"
+            ).value;
+
+
+        const compact =
+            document.getElementById(
+                "compactMode"
+            ).checked;
+
+
+        localStorage.setItem(
+            "appearanceSettings",
+            JSON.stringify({
+
+                theme:
+                    theme,
+
+                compact:
+                    compact
+
+            })
+        );
+
+
+        alert(
+            "Appearance settings saved successfully! ✅"
+        );
+
+    }
+
+
+
+    function loadAppearance() {
+
+        try {
+
+            const settings =
+                JSON.parse(
+                    localStorage.getItem(
+                        "appearanceSettings"
+                    )
+                );
+
+
+            if (!settings) {
+
+                return;
+
+            }
+
+
+            document.getElementById(
+                "themeSelect"
+            ).value =
+                settings.theme || "light";
+
+
+            document.getElementById(
+                "compactMode"
+            ).checked =
+                settings.compact || false;
+
+        } catch (error) {
+
+            console.error(
+                error
+            );
+
+        }
+
+    }
+
+
+
+    /* =====================================================
+       LOGOUT
+       ===================================================== */
+
+    function logoutUser() {
+
+        const confirmLogout =
+            confirm(
+                "Are you sure you want to logout?"
+            );
+
+
+        if (!confirmLogout) {
+
+            return;
+
+        }
+
+
+        localStorage.removeItem(
+            "user"
+        );
+
+
+        localStorage.removeItem(
+            "token"
+        );
+
+
+        window.location.href =
+            "login.html";
+
+    }
+
+
+
+    /* =====================================================
+       PAGE LOAD
+       ===================================================== */
+
+    document.addEventListener(
+        "DOMContentLoaded",
+        function () {
+
+            loadAccount();
+
+            loadNotifications();
+
+            loadAppearance();
+
+        }
+    );
+
+</script>
+
+
+</body>
+
+</html>

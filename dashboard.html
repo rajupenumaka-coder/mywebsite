@@ -1,0 +1,283 @@
+```html
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Dashboard - My Website</title>
+
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+<div class="dashboard-layout">
+
+    <!-- SIDEBAR -->
+    <aside class="dashboard-sidebar">
+
+        <div class="sidebar-logo">
+            <h2>My Website</h2>
+        </div>
+
+        <nav class="dashboard-nav">
+            <a href="dashboard.html" class="active">🏠 Dashboard</a>
+            <a href="profile.html">👤 My Profile</a>
+            <a href="messages.html">💬 Messages</a>
+            <a href="statistics.html">📊 Statistics</a>
+            <a href="settings.html">⚙️ Settings</a>
+        </nav>
+
+        <div class="sidebar-bottom">
+            <button type="button" onclick="logoutUser()">
+                🚪 Logout
+            </button>
+        </div>
+
+    </aside>
+
+    <!-- MAIN CONTENT -->
+    <main class="dashboard-main">
+
+        <!-- HEADER -->
+        <header class="dashboard-header">
+
+            <div>
+                <h1>Dashboard</h1>
+                <p>Welcome back!</p>
+                <p id="dashboardStatus" role="status"></p>
+            </div>
+
+            <div class="dashboard-user">
+
+                <div class="user-avatar">👤</div>
+
+                <div>
+                    <strong id="dashboardUserName">User</strong>
+                    <small id="dashboardUserEmail">Loading...</small>
+                </div>
+
+            </div>
+
+        </header>
+
+        <!-- WELCOME CARD -->
+        <section class="welcome-card">
+
+            <div>
+                <h2>
+                    Welcome,
+                    <span id="welcomeUserName">User</span>
+                    🎉
+                </h2>
+
+                <p>
+                    Manage your account and website activity from here.
+                </p>
+            </div>
+
+        </section>
+
+        <!-- DATABASE STATISTICS -->
+        <section class="dashboard-section">
+
+            <div class="section-heading">
+                <h2>Overview</h2>
+            </div>
+
+            <div class="stats-grid">
+
+                <!-- TOTAL USERS -->
+                <div class="stat-card">
+
+                    <div class="stat-icon">👥</div>
+
+                    <div>
+                        <h3 id="totalUsers">0</h3>
+                        <p>Total Users</p>
+                    </div>
+
+                </div>
+
+                <!-- TOTAL MESSAGES -->
+                <div class="stat-card">
+
+                    <div class="stat-icon">📩</div>
+
+                    <div>
+                        <h3 id="totalMessages">0</h3>
+                        <p>Total Messages</p>
+                    </div>
+
+                </div>
+
+                <!-- MY MESSAGES -->
+                <div class="stat-card">
+
+                    <div class="stat-icon">💬</div>
+
+                    <div>
+                        <h3 id="userMessages">0</h3>
+                        <p>My Messages</p>
+                    </div>
+
+                </div>
+
+                <!-- ACCOUNT STATUS -->
+                <div class="stat-card">
+
+                    <div class="stat-icon">🔐</div>
+
+                    <div>
+                        <h3 id="accountStatus">Active</h3>
+                        <p>Account Status</p>
+                    </div>
+
+                </div>
+
+            </div>
+
+        </section>
+
+        <!-- ACCOUNT INFORMATION -->
+        <section class="dashboard-section">
+
+            <div class="section-heading">
+                <h2>Account Information</h2>
+            </div>
+
+            <div class="dashboard-card">
+
+                <div class="info-row">
+                    <span>Full Name</span>
+                    <strong id="profileName">Loading...</strong>
+                </div>
+
+                <div class="info-row">
+                    <span>Email</span>
+                    <strong id="profileEmail">Loading...</strong>
+                </div>
+
+                <div class="info-row">
+                    <span>Mobile</span>
+                    <strong id="profileMobile">-</strong>
+                </div>
+
+                <div class="info-row">
+                    <span>Country</span>
+                    <strong id="profileCountry">-</strong>
+                </div>
+
+                <div class="info-row">
+                    <span>City</span>
+                    <strong id="profileCity">-</strong>
+                </div>
+
+                <div class="profile-action">
+                    <a href="profile.html">Edit Profile →</a>
+                </div>
+
+            </div>
+
+        </section>
+
+        <!-- QUICK ACTIONS -->
+        <section class="dashboard-section">
+
+            <div class="section-heading">
+                <h2>Quick Actions</h2>
+            </div>
+
+            <div class="quick-actions">
+
+                <a href="profile.html" class="action-card">
+                    <span>👤</span>
+                    <div>
+                        <h3>My Profile</h3>
+                        <p>View and update your profile</p>
+                    </div>
+                </a>
+
+                <a href="messages.html" class="action-card">
+                    <span>💬</span>
+                    <div>
+                        <h3>Messages</h3>
+                        <p>View website messages</p>
+                    </div>
+                </a>
+
+                <a href="statistics.html" class="action-card">
+                    <span>📊</span>
+                    <div>
+                        <h3>Statistics</h3>
+                        <p>View website statistics</p>
+                    </div>
+                </a>
+
+                <a href="settings.html" class="action-card">
+                    <span>⚙️</span>
+                    <div>
+                        <h3>Settings</h3>
+                        <p>Manage account settings</p>
+                    </div>
+                </a>
+
+            </div>
+
+        </section>
+
+        <!-- FOOTER -->
+        <footer class="dashboard-footer">
+            <p>© 2026 My Website. All rights reserved.</p>
+        </footer>
+
+    </main>
+
+</div>
+
+<!-- Load the existing JavaScript file -->
+<script src="script.js"></script>
+
+<!-- Run existing dashboard functions -->
+<script>
+document.addEventListener("DOMContentLoaded", async function () {
+
+    // Check whether the user is logged in.
+    if (typeof checkLogin === "function") {
+        if (!checkLogin()) {
+            return;
+        }
+    }
+
+    // Load dashboard counts from the backend.
+    if (typeof loadDashboard === "function") {
+        await loadDashboard();
+    } else {
+        document.getElementById("dashboardStatus").textContent =
+            "Dashboard function not found. Check script.js.";
+    }
+
+    // Load profile information if this function exists.
+    if (typeof loadProfile === "function") {
+        await loadProfile();
+    }
+
+    // Update the welcome name from saved signup data, if available.
+    const savedName = localStorage.getItem("signupName");
+
+    if (savedName) {
+        const welcomeName = document.getElementById("welcomeUserName");
+
+        if (welcomeName) {
+            welcomeName.textContent = savedName;
+        }
+    }
+
+});
+</script>
+
+</body>
+</html>
+```

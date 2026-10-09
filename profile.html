@@ -1,0 +1,512 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>My Profile - My Website</title>
+
+    <link rel="stylesheet"
+          href="style.css">
+
+</head>
+
+
+<body>
+
+<div class="dashboard-layout">
+
+
+    <!-- SIDEBAR -->
+
+    <aside class="dashboard-sidebar">
+
+        <div class="sidebar-logo">
+            <h2>My Website</h2>
+        </div>
+
+
+        <nav class="dashboard-nav">
+
+            <a href="dashboard.html">
+                🏠 Dashboard
+            </a>
+
+            <a href="profile.html"
+               class="active">
+                👤 My Profile
+            </a>
+
+            <a href="messages.html">
+                💬 Messages
+            </a>
+
+            <a href="statistics.html">
+                📊 Statistics
+            </a>
+
+            <a href="settings.html">
+                ⚙️ Settings
+            </a>
+
+        </nav>
+
+
+        <div class="sidebar-bottom">
+
+            <button
+                type="button"
+                onclick="logoutUser()"
+            >
+                🚪 Logout
+            </button>
+
+        </div>
+
+    </aside>
+
+
+
+    <!-- MAIN -->
+
+    <main class="dashboard-main">
+
+
+        <!-- HEADER -->
+
+        <header class="dashboard-header">
+
+            <div>
+
+                <h1>
+                    My Profile
+                </h1>
+
+                <p>
+                    View and manage your account information.
+                </p>
+
+            </div>
+
+        </header>
+
+
+
+        <!-- PROFILE -->
+
+        <section class="profile-page-card">
+
+
+            <div class="profile-top">
+
+                <div class="large-avatar">
+                    👤
+                </div>
+
+                <div>
+
+                    <h2 id="profileDisplayName">
+                        Loading...
+                    </h2>
+
+                    <p id="profileDisplayEmail">
+                        Loading...
+                    </p>
+
+                </div>
+
+            </div>
+
+
+
+            <!-- PROFILE FORM -->
+
+            <form onsubmit="updateProfile(event)">
+
+
+                <div class="profile-form-grid">
+
+
+                    <!-- NAME -->
+
+                    <div class="profile-field">
+
+                        <label for="profileName">
+                            Full Name
+                        </label>
+
+                        <input
+                            type="text"
+                            id="profileName"
+                            placeholder="Full Name"
+                            required
+                        >
+
+                    </div>
+
+
+
+                    <!-- EMAIL -->
+
+                    <div class="profile-field">
+
+                        <label for="profileEmail">
+                            Email Address
+                        </label>
+
+                        <input
+                            type="email"
+                            id="profileEmail"
+                            placeholder="Email"
+                            disabled
+                        >
+
+                    </div>
+
+
+
+                    <!-- MOBILE -->
+
+                    <div class="profile-field">
+
+                        <label for="profileMobile">
+                            Mobile Number
+                        </label>
+
+                        <input
+                            type="tel"
+                            id="profileMobile"
+                            placeholder="Mobile Number"
+                        >
+
+                    </div>
+
+
+
+                    <!-- DOB -->
+
+                    <div class="profile-field">
+
+                        <label for="profileDOB">
+                            Date of Birth
+                        </label>
+
+                        <input
+                            type="date"
+                            id="profileDOB"
+                        >
+
+                    </div>
+
+
+
+                    <!-- GENDER -->
+
+                    <div class="profile-field">
+
+                        <label for="profileGender">
+                            Gender
+                        </label>
+
+                        <select id="profileGender">
+
+                            <option value="">
+                                Select Gender
+                            </option>
+
+                            <option value="Male">
+                                Male
+                            </option>
+
+                            <option value="Female">
+                                Female
+                            </option>
+
+                            <option value="Other">
+                                Other
+                            </option>
+
+                        </select>
+
+                    </div>
+
+
+
+                    <!-- COUNTRY -->
+
+                    <div class="profile-field">
+
+                        <label for="profileCountry">
+                            Country
+                        </label>
+
+                        <select id="profileCountry">
+
+                            <option value="">
+                                Select Country
+                            </option>
+
+                            <option value="India">
+                                India
+                            </option>
+
+                            <option value="USA">
+                                USA
+                            </option>
+
+                            <option value="UK">
+                                UK
+                            </option>
+
+                            <option value="Canada">
+                                Canada
+                            </option>
+
+                            <option value="Australia">
+                                Australia
+                            </option>
+
+                        </select>
+
+                    </div>
+
+
+
+                    <!-- CITY -->
+
+                    <div class="profile-field">
+
+                        <label for="profileCity">
+                            City
+                        </label>
+
+                        <input
+                            type="text"
+                            id="profileCity"
+                            placeholder="City"
+                        >
+
+                    </div>
+
+
+                </div>
+
+
+
+                <!-- BUTTON -->
+
+                <div class="profile-buttons">
+
+                    <button
+                        type="submit"
+                        class="save-profile-btn"
+                    >
+                        💾 Save Changes
+                    </button>
+
+
+                    <button
+                        type="button"
+                        class="cancel-profile-btn"
+                        onclick="loadProfile()"
+                    >
+                        Cancel
+                    </button>
+
+                </div>
+
+
+            </form>
+
+
+        </section>
+
+
+
+        <!-- SECURITY -->
+
+        <section class="profile-page-card security-card">
+
+            <div class="section-heading">
+
+                <h2>
+                    🔐 Security
+                </h2>
+
+                <p>
+                    Change your account password.
+                </p>
+
+            </div>
+
+
+            <form onsubmit="changePassword(event)">
+
+
+                <div class="profile-form-grid">
+
+
+                    <div class="profile-field">
+
+                        <label>
+                            Current Password
+                        </label>
+
+                        <input
+                            type="password"
+                            id="currentPassword"
+                            required
+                        >
+
+                    </div>
+
+
+                    <div class="profile-field">
+
+                        <label>
+                            New Password
+                        </label>
+
+                        <input
+                            type="password"
+                            id="newPassword"
+                            minlength="6"
+                            required
+                        >
+
+                    </div>
+
+
+                    <div class="profile-field">
+
+                        <label>
+                            Confirm New Password
+                        </label>
+
+                        <input
+                            type="password"
+                            id="confirmNewPassword"
+                            minlength="6"
+                            required
+                        >
+
+                    </div>
+
+
+                </div>
+
+
+                <button
+                    type="submit"
+                    class="save-profile-btn"
+                >
+                    🔑 Change Password
+                </button>
+
+
+            </form>
+
+        </section>
+
+
+
+        <!-- FOOTER -->
+
+        <footer class="dashboard-footer">
+
+            <p>
+                © 2026 My Website.
+                All rights reserved.
+            </p>
+
+        </footer>
+
+
+    </main>
+
+</div>
+
+
+
+<script src="script.js"></script>
+
+
+<script>
+
+document.addEventListener(
+    "DOMContentLoaded",
+    function () {
+
+        if (!checkLogin()) {
+            return;
+        }
+
+
+        loadProfile();
+
+
+        /*
+         Update the display name/email
+         after profile data loads.
+        */
+
+        setTimeout(
+            function () {
+
+                const name =
+                    document.getElementById(
+                        "profileName"
+                    )?.value;
+
+
+                const email =
+                    document.getElementById(
+                        "profileEmail"
+                    )?.value;
+
+
+                const displayName =
+                    document.getElementById(
+                        "profileDisplayName"
+                    );
+
+
+                const displayEmail =
+                    document.getElementById(
+                        "profileDisplayEmail"
+                    );
+
+
+                if (displayName && name) {
+
+                    displayName.textContent =
+                        name;
+
+                }
+
+
+                if (displayEmail && email) {
+
+                    displayEmail.textContent =
+                        email;
+
+                }
+
+            },
+            500
+        );
+
+    }
+
+);
+
+</script>
+
+
+</body>
+
+</html>

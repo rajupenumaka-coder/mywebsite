@@ -1,0 +1,471 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>Login - My Website</title>
+
+    <link rel="stylesheet"
+          href="style.css">
+
+</head>
+
+
+<body>
+
+<div class="login-box">
+
+    <h1>Welcome Back 👋</h1>
+
+    <p>Login to your account</p>
+
+
+    <form id="loginForm">
+
+
+        <!-- EMAIL -->
+
+        <label for="loginEmail">
+            Email Address
+        </label>
+
+        <input
+            type="email"
+            id="loginEmail"
+            placeholder="Enter your email"
+            autocomplete="email"
+            required
+        >
+
+
+        <!-- PASSWORD -->
+
+        <label for="loginPassword">
+            Password
+        </label>
+
+        <div class="password-box">
+
+            <input
+                type="password"
+                id="loginPassword"
+                placeholder="Enter your password"
+                autocomplete="current-password"
+                required
+            >
+
+            <button
+                type="button"
+                id="togglePassword"
+            >
+                👁️
+            </button>
+
+        </div>
+
+
+        <!-- REMEMBER + FORGOT -->
+
+        <div class="login-options">
+
+            <label class="remember-me">
+
+                <input
+                    type="checkbox"
+                    id="rememberMe"
+                >
+
+                Remember Me
+
+            </label>
+
+
+            <a href="forgot.html">
+                Forgot Password?
+            </a>
+
+        </div>
+
+
+        <!-- LOGIN BUTTON -->
+
+        <button
+            type="submit"
+            class="login-button"
+            id="loginButton"
+        >
+            Login
+        </button>
+
+
+    </form>
+
+
+    <!-- SIGNUP -->
+
+    <div class="signup-section">
+
+        <p>
+            Don't have an account?
+        </p>
+
+        <button
+            type="button"
+            onclick="window.location.href='signup.html'"
+        >
+            Create Account
+        </button>
+
+    </div>
+
+
+    <br>
+
+
+    <!-- HOME -->
+
+    <a href="index.html">
+        ← Back to Home
+    </a>
+
+
+</div>
+
+
+<script>
+
+
+
+// =====================================================
+// SHOW / HIDE PASSWORD
+// =====================================================
+
+document
+    .getElementById("togglePassword")
+    .addEventListener("click", function () {
+
+        const password =
+            document.getElementById("loginPassword");
+
+
+        if (
+            password.type === "password"
+        ) {
+
+            password.type = "text";
+
+            this.textContent = "🙈";
+
+        } else {
+
+            password.type = "password";
+
+            this.textContent = "👁️";
+
+        }
+
+    });
+
+
+
+// =====================================================
+// LOGIN
+// =====================================================
+
+document
+    .getElementById("loginForm")
+    .addEventListener("submit", async function (event) {
+
+        event.preventDefault();
+
+
+        const email =
+            document
+                .getElementById("loginEmail")
+                .value
+                .trim()
+                .toLowerCase();
+
+
+        const password =
+            document
+                .getElementById("loginPassword")
+                .value;
+
+
+        const rememberMe =
+            document
+                .getElementById("rememberMe")
+                .checked;
+
+
+        const loginButton =
+            document
+                .getElementById("loginButton");
+
+
+        // =============================================
+        // BUTTON LOADING
+        // =============================================
+
+        loginButton.disabled = true;
+
+        loginButton.textContent =
+            "Logging in...";
+
+
+        try {
+
+
+            // =========================================
+            // SEND LOGIN REQUEST
+            // =========================================
+
+            const response =
+                await fetch(
+                    "/api/login",
+                    {
+
+                        method: "POST",
+
+                        headers: {
+
+                            "Content-Type":
+                                "application/json"
+
+                        },
+
+                        body:
+                            JSON.stringify({
+
+                                email:
+                                    email,
+
+                                password:
+                                    password
+
+                            })
+
+                    }
+                );
+
+
+            // =========================================
+            // GET RESPONSE
+            // =========================================
+
+            const data =
+                await response.json();
+
+
+            console.log(
+                "Login response:",
+                data
+            );
+
+
+            // =========================================
+            // LOGIN ERROR
+            // =========================================
+
+            if (
+                !response.ok ||
+                !data.success
+            ) {
+
+                alert(
+                    data.message ||
+                    "Invalid email or password."
+                );
+
+                loginButton.disabled =
+                    false;
+
+                loginButton.textContent =
+                    "Login";
+
+                return;
+
+            }
+
+
+            // =========================================
+            // CHECK TOKEN
+            // =========================================
+
+            if (
+                !data.token
+            ) {
+
+                alert(
+                    "Login successful, but token was not received from the server."
+                );
+
+                loginButton.disabled =
+                    false;
+
+                loginButton.textContent =
+                    "Login";
+
+                return;
+
+            }
+
+
+            // =========================================
+            // CLEAR OLD DATA
+            // =========================================
+
+            localStorage.removeItem(
+                "authToken"
+            );
+
+            sessionStorage.removeItem(
+                "authToken"
+            );
+
+
+            // =========================================
+            // SAVE TOKEN
+            // =========================================
+
+            if (
+                rememberMe
+            ) {
+
+                localStorage.setItem(
+                    "authToken",
+                    data.token
+                );
+
+            } else {
+
+                sessionStorage.setItem(
+                    "authToken",
+                    data.token
+                );
+
+            }
+
+
+            // =========================================
+            // SAVE LOGIN STATUS
+            // =========================================
+
+            localStorage.setItem(
+                "loggedIn",
+                "true"
+            );
+
+
+            // =========================================
+            // SAVE USER DATA
+            // =========================================
+
+            if (
+                data.user
+            ) {
+
+                localStorage.setItem(
+                    "userId",
+                    data.user.id || ""
+                );
+
+
+                localStorage.setItem(
+                    "userName",
+                    data.user.name || ""
+                );
+
+
+                localStorage.setItem(
+                    "userEmail",
+                    data.user.email || ""
+                );
+
+
+                localStorage.setItem(
+                    "userMobile",
+                    data.user.mobile || ""
+                );
+
+
+                localStorage.setItem(
+                    "userDob",
+                    data.user.dob || ""
+                );
+
+
+                localStorage.setItem(
+                    "userGender",
+                    data.user.gender || ""
+                );
+
+
+                localStorage.setItem(
+                    "userCountry",
+                    data.user.country || ""
+                );
+
+
+                localStorage.setItem(
+                    "userCity",
+                    data.user.city || ""
+                );
+
+            }
+
+
+            // =========================================
+            // SUCCESS
+            // =========================================
+
+            alert(
+                "Login successful! 🎉"
+            );
+
+
+            // =========================================
+            // DASHBOARD
+            // =========================================
+
+            window.location.href =
+                "dashboard.html";
+
+
+        } catch (error) {
+
+
+            console.error(
+                "Login Error:",
+                error
+            );
+
+
+            alert(
+                "Server connection failed.\n\n" +
+                "Please make sure Node.js server is running."
+            );
+
+
+            loginButton.disabled =
+                false;
+
+            loginButton.textContent =
+                "Login";
+
+        }
+
+    });
+
+</script>
+
+
+</body>
+
+</html>
